@@ -57,57 +57,57 @@ cd ../../..
 
 ## Train ASR
 
-### Pre-train a wav2vec 2.0 model
+### 1.0 Pre-train a wav2vec 2.0 model
 
-1. Put all your audio files in a single folder according to guidelines emntioned below:
+#### 1.1 Put all your audio files in a single folder according to guidelines emntioned below:
 
 Format: wav, PCM 16 bit, single channel
 Sampling_rate: 16000
 Length: 5 to 30 seconds
 Content: Silence should be removed from all audio files
 
-2. Replace the fairseq path and audio folder path in *gen_pretrain.py* Generate pre-training transcripts using:
+#### 1.2 Replace the fairseq path and audio folder path in *gen_pretrain.py* Generate pre-training transcripts using:
 
 ```
 python gen_pretrain.py
 ```
 
-3. Download an initial model using:
+#### 1.3 Download an initial model using:
 
 ```
 wget https://dl.fbaipublicfiles.com/fairseq/wav2vec/wav2vec_small.pt
 ```
 *Our experiments showed pre-training from existing wav2vec 2.0 pre-trained models pre-trained on english language provided better results when finetuned on Indic languages rather than fine-tuning on a model pre-trained from scratch only on hindi languages*
 
-4. Replace the manifest directory in pretrain.py and run pre-training using:
+#### 1.4 Replace the manifest directory in pretrain.py and run pre-training using:
 
 ```
 python pretrain.py --init_model path/to/wav2vec_small.pt
 ```
 
 
-### Finetune your pretrained model using CTC
+### 2.0 Finetune your pretrained model using CTC
 
-1. First create a manifest file of the form (for both test and valid)
+#### 2.1 First create a manifest file of the form (for both test and valid)
 
 ```
 /path/to/audio/ transcript
 ```
 *path and transcript should be seperated by a tab*
 
-2. Replace the destination foler path and the manifest file path in *prep.py* file and run (for both test and valid):
+#### 2.2 Replace the destination foler path and the manifest file path in *prep.py* file and run (for both test and valid):
 
 ```
 python prep.py
 ```
 
-3. Create dictionary file using:
+#### 2.3 Create dictionary file using:
 
 ```
 python gen_dict.py --transcript_file path/to/transcript.txt --save_dir path/to/save_dir
 ```
 
-3. Keep all the files in a single folder, replace the path to this folder in the finetune.py file and run 
+#### 2.4 Keep all the files in a single folder, replace the path to this folder in the finetune.py file and run 
 
 ```
 python finetune.py --transcript_file path/to/transcript.txt --pretrain_model path/to/pretrain_checkpoint_best.pt --dict_file path/to/dict.ltr.txt
