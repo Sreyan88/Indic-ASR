@@ -110,5 +110,5 @@ python gen_dict.py --transcript_file path/to/transcript.txt --save_dir path/to/s
 #### 2.4 Keep all the files in a single folder, replace the path to this folder in the finetune.py file and run 
 
 ```
-python finetune.py --transcript_file path/to/transcript.txt --pretrain_model path/to/pretrain_checkpoint_best.pt --dict_file path/to/dict.ltr.txt
+python finetune.py --pretrain_model path/to/pretrain_checkpoint_best.pt
 ```
